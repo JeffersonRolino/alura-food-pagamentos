@@ -13,13 +13,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PagamentoService {
-    @Autowired
-    private PagamentoRepository pagamentoRepository;
+    private final PagamentoRepository pagamentoRepository;
+    private final ModelMapper modelMapper;
 
-   private final ModelMapper modelMapper;
-
-    public PagamentoService(ModelMapper modelMapper) {
+    public PagamentoService(PagamentoRepository pagamentoRepository, ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.pagamentoRepository = pagamentoRepository;
     }
 
     public Page<PagamentoDto> obterTodos(Pageable page) {
@@ -28,7 +27,7 @@ public class PagamentoService {
                 .map(p -> modelMapper.map(p, PagamentoDto.class));
     }
 
-    public PagamentoDto obterPorId(Long id){
+    public PagamentoDto obterPorId(Long id) {
         Pagamento pagamento = pagamentoRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
