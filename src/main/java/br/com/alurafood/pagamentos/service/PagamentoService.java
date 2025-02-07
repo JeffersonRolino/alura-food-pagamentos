@@ -16,8 +16,11 @@ public class PagamentoService {
     @Autowired
     private PagamentoRepository pagamentoRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
+   private final ModelMapper modelMapper;
+
+    public PagamentoService(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     public Page<PagamentoDto> obterTodos(Pageable page) {
         return pagamentoRepository
